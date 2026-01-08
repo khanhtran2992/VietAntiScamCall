@@ -5,7 +5,7 @@ Hệ thống tích hợp sinh dataset hội thoại lừa đảo viễn thông v
 
 ## Cấu trúc thư mục
 ```
-generator/
+DatasetGenerator/
 ├── dataset_generator.py    # Script chính sinh dataset
 └── README.md             # Hướng dẫn sử dụng
 
