@@ -1,0 +1,34 @@
+import logging
+import time
+import sys
+from typing import Optional, TextIO
+
+class ConversationLogger:
+    """Conversation logger, responsible for recording and outputting dialogue content"""
+    
+    def __init__(self, log_file: Optional[str] = None, console_output: bool = True):
+        self.console_output = console_output
+        
+        # 设置日志
+        logging.basicConfig(
+            level=logging.INFO,
+            format='%(asctime)s - %(message)s',
+            datefmt='%Y-%m-%d %H:%M:%S'
+        )
+        
+        self.logger = logging.getLogger("dialogue")
+          # 如果提供了日志文件，添加文件处理器
+        if log_file:
+            file_handler = logging.FileHandler(log_file, encoding='utf-8')
+            file_handler.setFormatter(logging.Formatter('%(asctime)s - %(message)s'))
+            self.logger.addHandler(file_handler)
+    
+    def log(self, message: str) -> None:
+        """Log message"""
+        if self.console_output:
+            try:
+                print(f"[{time.strftime('%Y-%m-%d %H:%M:%S')}] {message}")
+            except UnicodeEncodeError:
+                # Fallback for encoding issues
+                print(f"[{time.strftime('%Y-%m-%d %H:%M:%S')}] {message.encode('ascii', errors='replace').decode('ascii')}")
+        self.logger.info(message)
